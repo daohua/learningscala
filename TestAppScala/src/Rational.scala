@@ -1,5 +1,5 @@
 
-class Rational(n:Int,d:Int){
+class Rational(n:Int,d:Int) extends Ordered[Rational]{
   require(d!=0)
   private val g = gcd(n,d)
   val num = n/g
@@ -9,13 +9,15 @@ class Rational(n:Int,d:Int){
   def +(that:Rational)= new Rational(num*that.de+that.num*de, de*that.de)
   def +(i:Int) = new Rational(num+de*i, de)
   def *(that:Rational)=new Rational(num*that.num,de*that.de)
-  
   def lessThan(that:Rational) = this.num*that.de<that.num*this.de
   
   def max(that:Rational) = if(lessThan(that)) that else this
   def this(n:Int)=this(n,1)
   private def gcd(a:Int,b:Int):Int= if(b==0) a else gcd(b,a%b)
-  
+  override def compare(that:Rational)={
+    (this.num*that.de)-(that.num*this.de)
+  }
+
 }
 
 object RationalMain extends App{
